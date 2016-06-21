@@ -1,0 +1,70 @@
+name: voltaire
+version: 0.1.0
+about: A wrapper for Volatility to make your life easier
+
+# AppSettings can be defined as a list and are **not** ascii case sensitive
+settings:
+    - ArgRequiredElseHelp
+
+args:
+    - path-to-volatility:
+        short: p
+        help: Specifies the path to Volatility. If not specified, we'll take a guess!
+        takes_value: true
+
+subcommands:
+    - scan:
+        about: Batches common volatility scan commands
+        args:
+            - source:
+                short: s
+                help: Input RAM sample.
+                takes_value: true
+            - destination:
+                short: d
+                help: Output directory for results. Will be created if path doesn't exist.
+                takes_value: true
+            - es:
+                short: e
+                help: Sets the ES tag on the output files.
+                takes_value: true
+            - profile:
+                short: p
+                help: Sets the type of system the memory dump came from.
+                possible_values:
+                  - VistaSP0x64
+                  - VistaSP0x86
+                  - VistaSP1x64
+                  - VistaSP1x86
+                  - VistaSP2x64
+                  - VistaSP2x86
+                  - Win10x64
+                  - Win10x86
+                  - Win2003SP0x86
+                  - Win2003SP1x64
+                  - Win2003SP1x86
+                  - Win2003SP2x64
+                  - Win2003SP2x86
+                  - Win2008R2SP0x64
+                  - Win2008R2SP1x64
+                  - Win2008SP1x64
+                  - Win2008SP1x86
+                  - Win2008SP2x64
+                  - Win2008SP2x86
+                  - Win2012R2x64
+                  - Win2012x64
+                  - Win7SP0x64
+                  - Win7SP0x86
+                  - Win7SP1x64
+                  - Win7SP1x86
+                  - Win81U1x64
+                  - Win81U1x86
+                  - Win8SP0x64
+                  - Win8SP0x86
+                  - Win8SP1x64
+                  - Win8SP1x86
+                  - WinXPSP1x64
+                  - WinXPSP2x64
+                  - WinXPSP2x86
+                  - WinXPSP3x86
+                takes_value: true
