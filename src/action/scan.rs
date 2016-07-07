@@ -1,12 +1,18 @@
 use std::fs;
+use std::path::{Path, PathBuf};
 
-pub fn execute(mut volatility: super::Command, args: &super::ArgMatches) {
-    let source = fs::canonicalize(args.value_of("source").unwrap()).unwrap();
-    let destination = fs::canonicalize(args.value_of("destination").unwrap()).unwrap();
+pub fn execute(volatility_path: PathBuf, args: &super::ArgMatches) {
+    let source = Path::new(args.value_of("source").unwrap());
+    let destination = Path::new(args.value_of("destination").unwrap());
     let es = args.value_of("es").unwrap();
     let profile = args.value_of("profile").unwrap();
 
+    if !source.exists() {
+        panic!("Input file not found");
+    }
+
     if !destination.exists() {
+        println!("Creating {}", destination.to_string_lossy());
         fs::create_dir_all(&destination).unwrap();
     }
 
@@ -34,13 +40,14 @@ pub fn execute(mut volatility: super::Command, args: &super::ArgMatches) {
     for test in tests {
         println!("Starting {}", test);
 
-        let outfile = format!("{}ES{}_{}.txt", &destination.to_str().unwrap(), es, test);
+        let outfile = format!("{}/ES{}_{}.txt", destination.to_str().unwrap(), es, test);
 
-        let result = volatility.arg("-f")
+        let result = super::Command::new(&volatility_path)
+            .arg("-f")
             .arg(&source)
-            .arg(format!("--profile={}", profile))
+            .arg(format!("--profile={}", &profile))
             .arg(test)
-            .arg(format!("-output-file={}", outfile))
+            .arg(format!("--output-file={}", &outfile))
             .output();
 
         if let Ok(output) = result {
@@ -57,15 +64,17 @@ pub fn execute(mut volatility: super::Command, args: &super::ArgMatches) {
     }
 
     // If we're running Voltaire on Windows, we can execute another test
+    // ACTUALLY we need to check if it's a Windows profile
     if cfg!(target_os = "windows") {
         let outfile = format!("{}ES{}_autorun.txt", &destination.to_str().unwrap(), es);
 
-        let result = volatility.arg("-f")
+        let result = super::Command::new(volatility_path)
+            .arg("-f")
             .arg(source)
             .arg(format!("--profile={}", profile))
             .arg("printkey")
             .arg(r#""Software\Microsoft\Windows\CurrentVersion\Run\""#)
-            .arg(format!("-output-file={}", outfile))
+            .arg(format!("--output-file={}", outfile))
             .output();
 
         if let Ok(output) = result {

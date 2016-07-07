@@ -10,7 +10,7 @@ use action::scan;
 use action::process;
 
 fn main() {
-    let yaml = load_yaml!("src/commands.yml");
+    let yaml = load_yaml!("commands.yml");
     let cli_input = App::from_yaml(yaml).get_matches();
 
     // Set the path to volatility via user input or a basic search
@@ -20,18 +20,16 @@ fn main() {
         fetch_volatility().unwrap()
     };
 
-    let volatility = Command::new(volatility_path);
-
     let pair = if let Some(name) = cli_input.subcommand_name() {
         (name, cli_input.subcommand_matches(name).unwrap())
     } else {
-        panic!()
+        panic!("No subcommand provided")
     };
 
     //Decide which code path to execute given a subcommand
     match pair {
-        ("scan", args) => scan::execute(volatility, args),
-        ("process", args) => process::execute(volatility, args),
+        ("scan", args) => scan::execute(volatility_path, args),
+        ("process", args) => process::execute(volatility_path, args),
         _ => panic!()
     };
 }

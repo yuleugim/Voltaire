@@ -1,4 +1,3 @@
-use action::Command;
-use action::ArgMatches;
+use std::path::{Path, PathBuf};
 
-pub fn execute(mut volatility: Command, args: &ArgMatches) {}
+pub fn execute(volatility_path: PathBuf, args: &super::ArgMatches) {}

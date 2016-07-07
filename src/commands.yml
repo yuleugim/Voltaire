@@ -20,17 +20,21 @@ subcommands:
                 short: s
                 help: Input RAM sample.
                 takes_value: true
+                required: true
             - destination:
                 short: d
                 help: Output directory for results. Will be created if path doesn't exist.
                 takes_value: true
+                required: true
             - es:
                 short: e
                 help: Sets the ES tag on the output files.
+                default_value: "001"
                 takes_value: true
             - profile:
                 short: p
                 help: Sets the type of system the memory dump came from.
+                default_value: WinXPSP3x86
                 possible_values:
                   - VistaSP0x64
                   - VistaSP0x86
