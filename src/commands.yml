@@ -1,5 +1,5 @@
 name: voltaire
-version: 0.1.0
+version: 0.1.1
 about: A wrapper for Volatility to make your life easier
 
 # AppSettings can be defined as a list and are **not** ascii case sensitive
