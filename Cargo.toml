@@ -1,6 +1,6 @@
 [package]
 name = "voltaire"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["Matt Freitas-Stavola <matt.freitas@lifars.com>"]
 
 [dependencies]
@@ -15,7 +15,7 @@ features = [ "suggestions", "color", "yaml" ]
 version = "2"
 default-features = false
 
-features = [ "suggestions", "color", "yaml", "lints" ]
+features = [ "suggestions", "color", "yaml" ]
 
 [profile.dev]
 opt-level = 0
