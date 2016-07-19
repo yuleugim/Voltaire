@@ -23,7 +23,7 @@ pub fn execute(volatility_path: PathBuf, args: &super::ArgMatches) {
                      "psxview",
                      "consoles",
                      "psscan",
-                     "mutantscan -s",
+                     "mutantscan",
                      "cmdscan",
                      "dlllist",
                      "filescan",

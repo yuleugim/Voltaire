@@ -39,7 +39,23 @@ fn fetch_volatility() -> Option<PathBuf> {
     let search_paths = if cfg!(target_os = "windows") {
         vec![r#".\vol.exe"#, r#".\vol.py"#]
     } else {
-        vec!["./vol.py", "/bin/vol.py", "/usr/bin/vol.py", "/usr/local/bin/vol.py"]
+        vec!["/usr/bin/volatility",
+             "./vol",
+             "/bin/vol",
+             "/usr/bin/vol",
+             "/usr/local/bin/vol",
+             "./vol.py",
+             "/bin/vol.py",
+             "/usr/bin/vol.py",
+             "/usr/local/bin/vol.py",
+             "./volatility",
+             "/bin/volatility",
+             "/usr/bin/volatility",
+             "/usr/local/bin/volatility",
+             "./volatility.py",
+             "/bin/volatility.py",
+             "/usr/bin/volatility.py",
+             "/usr/local/bin/volatility.py"]
     };
 
     for test_path in search_paths {
@@ -47,7 +63,8 @@ fn fetch_volatility() -> Option<PathBuf> {
 
         if path.exists() {
             return Some(path);
-        }
+        };
+        panic!("Unable to find volatility executable. Please use -p.")
     }
 
     None
